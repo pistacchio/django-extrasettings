@@ -5,6 +5,7 @@ $(function () {
         $('#id_settings')
             .add($('.form-row.field-schema'))
             .add($('.deletelink-box'))
+            .add($('input[name="_addanother"]'))
             .hide();
 
         $('#id_settings').after('<div id="id_settings_json"></div>');

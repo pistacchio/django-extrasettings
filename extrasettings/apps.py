@@ -15,11 +15,11 @@ class ExtrasettingsConfig(AppConfig):
 
     def ready(self):
         try:
-            if not settings.CONFIGURATION_DIR:
-                raise Exception('django-extrasettings: CONFIGURATION_DIR required in settings.py')
+            if not settings.EXTRASETTINGS_DIR:
+                raise Exception('django-extrasettings: EXTRASETTINGS_DIR required in settings.py')
 
             # Configure settings
-            settings_names = [os.path.splitext(d)[0] for d in os.listdir(settings.CONFIGURATION_DIR) if os.path.splitext(d)[1] == '.json']
+            settings_names = [os.path.splitext(d)[0] for d in os.listdir(settings.EXTRASETTINGS_DIR) if os.path.splitext(d)[1] == '.json']
 
             # Remove from the database the plugins no longer in PLUGIN_DIR
             for settings_obj in Extrasetting.objects.all():
@@ -30,7 +30,7 @@ class ExtrasettingsConfig(AppConfig):
                 if not re.match('^[a-zA-Z_][a-zA-Z0-9_]*$', setting_name):
                     raise Exception('django-extrasettings: %s.json is not a valid filename. Use only letters, underscores and numbers (no numbers as first char)' % setting_name)
 
-                filename = os.path.join(settings.CONFIGURATION_DIR, setting_name + '.json')
+                filename = os.path.join(settings.EXTRASETTINGS_DIR, setting_name + '.json')
 
                 try:
                     schema = json.load(open(filename))
